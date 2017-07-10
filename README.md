@@ -6,3 +6,7 @@ Here is a setup instruction:
 - run "composer install" from terminal .
 - run the app by typing "php app.php" .
 - check the log in the log file(path defined in config file).
+
+Details about the implementation:
+
+https://docs.google.com/presentation/d/1JJSIOuYC_AAmIUNpq6CZ9NfWSLC5Ip9Zpa4vvd7LpnI/edit#slide=id.p
