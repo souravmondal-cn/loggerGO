@@ -1,0 +1,19 @@
+{
+    "name": "AOP Logger",
+    "description": "AOP Logger",
+    "authors": [
+        {
+            "name": "Sourav Mondal",
+            "email": "souravm@capitalnumbers.com"
+        }
+    ],
+    "require": {
+        "goaop/framework": "*",
+        "monolog/monolog": "^1.23"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    }
+}
