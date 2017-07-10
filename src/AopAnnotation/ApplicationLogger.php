@@ -20,7 +20,7 @@ class ApplicationLogger implements Aspect {
 
     public function __construct() {
         $this->logger = new Logger('info');
-        $this->logger->pushHandler(new StreamHandler(__DIR__.'/../../application.log'));
+        $this->logger->pushHandler(new StreamHandler(LOG_FILE));
     }
 
     /**

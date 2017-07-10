@@ -10,7 +10,7 @@ use AopAnnotation\ApplicationAspectKernel;
 $applicationAspectKernel = ApplicationAspectKernel::getInstance();
 $applicationAspectKernel->init(array(
     'debug' => true,
-    'cacheDir' => __DIR__ . '/cache/',
+    'cacheDir' => CACHE_DIR,
     'includePaths' => array(
         __DIR__ . '/src/Application/'
     )
