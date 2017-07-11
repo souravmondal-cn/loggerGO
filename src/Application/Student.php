@@ -12,6 +12,10 @@ class Student {
     public function register($studentDetails) {
         $this->name = $studentDetails['name'];
         $this->email = $studentDetails['email'];
+        return array(
+            'name' => $this->name,
+            'email' => $this->email
+        );
     }
 
     public function getStudentDetails() {
@@ -28,6 +32,13 @@ class Student {
             'name' => $this->name,
             'email' => $this->email
         );
+    }
+
+    private function isValidEmail($email) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+        return true;
     }
 
 }
