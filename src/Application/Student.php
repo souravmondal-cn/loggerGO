@@ -2,36 +2,70 @@
 
 namespace Application;
 
-use Exception;
+//use Services\DbConnector;
+use mysqli;
+use AopAnnotation\Cacheable;
+use Services\DbConnector;
 
 class Student {
 
-    protected $name = '';
-    protected $email = '';
+    private $dbConnection = null;
 
+    public function __construct() {
+        $dbConnector = new DbConnector();
+        $this->dbConnection = $dbConnector->connect();
+    }
+    
     public function register($studentDetails) {
-        $this->name = $studentDetails['name'];
-        $this->email = $studentDetails['email'];
-        return array(
-            'name' => $this->name,
-            'email' => $this->email
+        $name = $studentDetails['name'];
+        $email = $studentDetails['email'];
+        $registered = $this->dbConnection->query(
+            "INSERT INTO student ("
+            . "name, email) "
+            . "VALUES('$name', '$email')"
         );
+
+        if ($registered) {
+            return array(
+                'id' => $this->dbConnection->insert_id,
+                'name' => $name,
+                'email' => $email
+            );
+        }
+        return false;
     }
 
-    public function getStudentDetails() {
-        return array(
-            'name' => $this->name,
-            'email' => $this->email
-        );
+    /**
+     * 
+     * @Cacheable
+     */
+    public function getStudentDetails($studentId) {
+        sleep(5);
+        $studentDetails = $this->dbConnection->query(
+            "SELECT * FROM student WHERE id = $studentId"
+        )->fetch_array();
+        if (!empty($studentDetails)) {
+            return $studentDetails;
+        }
+        return 'no student details found';
     }
 
     public function updateStudentDetails($updatedData) {
-        $this->name = $updatedData['name'];
-        $this->email = $updatedData['email'];
-        return array(
-            'name' => $this->name,
-            'email' => $this->email
+        $studentId = $updatedData['id'];
+        $name = $updatedData['name'];
+        $email = $updatedData['email'];
+        $updated = $this->dbConnection->query("UPDATE student "
+            . "SET name='$name', email='$email' "
+            . "WHERE id=$studentId"
         );
+
+        if ($updated) {
+            array(
+                'name' => $name,
+                'email' => $email
+            );
+        }
+        return false;
     }
 
     private function isValidEmail($email) {

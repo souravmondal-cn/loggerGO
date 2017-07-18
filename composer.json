@@ -9,7 +9,8 @@
     ],
     "require": {
         "goaop/framework": "*",
-        "monolog/monolog": "^1.23"
+        "monolog/monolog": "^1.23",
+        "fzaninotto/faker": "^1.6"
     },
     "autoload": {
         "psr-0": {

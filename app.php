@@ -5,6 +5,7 @@ include_once __DIR__ . '/config.php';
 
 use Application\Student;
 use AopAnnotation\ApplicationAspectKernel;
+use Faker\Factory;
 
 // Initialize an application aspect container
 $applicationAspectKernel = ApplicationAspectKernel::getInstance();
@@ -18,17 +19,28 @@ $applicationAspectKernel->init(array(
 
 
 $student = new Student();
+$faker = Factory::create();
 
-$student->register(array(
-    'name' => 'Sourav Mondal',
-    'email' => 'souravm@capitalnumbers.com'
+//getting dummy data with faker
+$fakerStudentName = $faker->name();
+$fakerStudentEmail = $faker->email();
+
+$newStudentDetails = $student->register(array(
+    'name' => $fakerStudentName,
+    'email' => $fakerStudentEmail
 ));
 
-echo 'Initiated With -> ' . json_encode($student->getStudentDetails()) . PHP_EOL;
+$newlyRegisterId = $newStudentDetails['id'];
+echo 'Initiated With -> ' . json_encode($student->getStudentDetails($newlyRegisterId)) . PHP_EOL;
+
+//generating dummy data with faker for updation
+$fakerUpdatedStudentName = $faker->name();
+$fakerUpdatedStudentEmail = $faker->email();
 
 $student->updateStudentDetails(array(
-    'name' => 'Sourav1 Mondal',
-    'email' => 'souravm2@capitalnumbers.com'
+    'id' => $newlyRegisterId,
+    'name' => $fakerUpdatedStudentName,
+    'email' => $fakerUpdatedStudentEmail
 ));
 
-echo 'Updated Details -> ' . json_encode($student->getStudentDetails()) . PHP_EOL;
+echo 'Updated Details -> ' . json_encode($student->getStudentDetails($newlyRegisterId)) . PHP_EOL;

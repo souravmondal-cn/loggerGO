@@ -42,7 +42,7 @@ class ApplicationLogger implements Aspect {
      * Method that will be called after real method
      *
      * @param MethodInvocation $invocation Invocation
-     * @After("execution(public Application\*->*(*))")
+     * @After("execution(public **->*(*))")
      */
     public function afterMethodExecution(MethodInvocation $invocation) {
         $obj = $invocation->getThis();
